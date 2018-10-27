@@ -1,0 +1,35 @@
+@startuml
+
+actor Guest
+
+Guest -> Game : Start game
+
+activate Game
+Game -> GameHost : Create GameHost Request
+
+activate GameHost
+GameHost -> GameHost : Create Three Doors
+Game <-- GameHost : Doors
+
+Game --> Guest : Request choosing three doors
+Guest --> Game : Door number
+
+Game --> GameHost : Open not prise door
+GameHost --> Game : Doors that one door opened
+
+Game --> Guest : Request to decide change choices
+Guest --> Game : yes or no
+
+Game --> GameHost : change choosen door
+GameHost --> Game : Doors
+
+Game --> GameHost : Open the choosen door
+GameHost --> Game : Doors
+
+Game --> Game : Judge the prise
+Game --> Guest : Notice the result
+
+deactivate GameHost
+deactivate Game
+
+@enduml
