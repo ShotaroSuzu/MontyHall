@@ -19,30 +19,38 @@ public class GameHostTest {
 	public void setup() {
 		doorsActual = gameHost.createDoors();
 	}
-	
+
 	@Test
 	public void testCreateTreeDoors() {
 		assertThat(doorsActual.size()).describedAs("３つの扉が生成されていることのテスト").isEqualTo(3);
 	}
-	
+
 	@Test
 	public void testCreateUnopenedDoors() {
 		assertThat(isAllClosed(doorsActual)).describedAs("生成された扉が全て閉じていることのテスト").isEqualTo(true);
 	}
-	
+
 	@Test
 	public void testCreateUnselectedDoors() {
 		assertThat(isAllUnSelected(doorsActual)).describedAs("生成された扉が全て未選択であることのテスト").isEqualTo(true);
 	}
 
+	@Test
+	public void testCreateDoorsContainingOnePrise() {
+		assertThat(isContainOnlyOnePrise(doorsActual)).describedAs("生成された扉の内一つに当たりが含まれていることのテスト").isEqualTo(true);
+	}
 	
+	private boolean isContainOnlyOnePrise(List<Door> doors) {
+		return doors.stream().filter(door -> door.isPrise()).count() == 1L;
+	}
+
 	private boolean isAllClosed(List<Door> doors) {
 		for(Door door : doors) {
 			if(door.isOpened()) return false;
 		}
 		return true;
 	}
-	
+
 	private boolean isAllUnSelected(List<Door> doors) {
 		for(Door door : doors) {
 			if(door.isSelected()) return false;
