@@ -1,6 +1,13 @@
 package com.zukky.shtr.montyHall.entity;
 
 public class Door {
+	public Door() {
+		super();
+	}
+	public Door(int id) {
+		super();
+		this.id = id;
+	}
 	private int id;
 	private boolean opened;
 	private boolean selected;

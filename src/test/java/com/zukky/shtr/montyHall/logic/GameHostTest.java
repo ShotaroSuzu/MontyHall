@@ -3,6 +3,7 @@ package com.zukky.shtr.montyHall.logic;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -73,6 +74,55 @@ public class GameHostTest {
 		assertThatIllegalArgumentException().isThrownBy(() -> gameHost.selectDoors(doorsForSelectFirst, illegalZeroIndex))
 											.describedAs("0を指定した場合はIllegalArgumentExceptionを投げる")
 											.withMessage(illegalZeroIndex + "が指定されました。" +"1から" + (doorsForSelectFirst.size()) + "までの数字を選択してください。");
+	}
+
+	@Test
+	public void testOpenUnselectedAndNoPriseDoor() {
+		List<Door> selectedIsPriseDoor = Lists.newArrayList(new Door(1), new Door(2), new Door(3));
+		selectedIsPriseDoor.get(1).setPrise(true);
+		selectedIsPriseDoor.get(1).setSelected(true);
+		gameHost.openUnselectedDoor(selectedIsPriseDoor);
+		
+		List<Door> selectedIsNotPriseDoor = createNoPriseDoors();
+		selectedIsNotPriseDoor.get(0).setPrise(true);
+		selectedIsNotPriseDoor.get(1).setSelected(true);
+		gameHost.openUnselectedDoor(selectedIsNotPriseDoor);
+		
+		assertThat(isOnlyOneDoorOpened(selectedIsPriseDoor)).describedAs("扉が一つだけ空いていることを確認する").isEqualTo(true);
+		assertThat(checkOpenedDoorIsNotPriseOrSelected(selectedIsPriseDoor)).describedAs("開けた扉が当たりではないことを確認する。選択した扉が当たりのケース").isEqualTo(true);
+		assertThat(isOnlyOneDoorOpened(selectedIsNotPriseDoor)).describedAs("扉が一つだけ空いていることを確認する").isEqualTo(true);
+		assertThat(checkOpenedDoorIsNotPriseOrSelected(selectedIsNotPriseDoor)).describedAs("開けた扉が当たりではないことを確認する。選択した扉が当たりではないケース").isEqualTo(true);
+	}
+
+	private List<Door> createNoPriseDoors() {
+		List<Door> selectedIsNotPriseDoor = Lists.newArrayList(new Door(1), new Door(2), new Door(3));
+		return selectedIsNotPriseDoor;
+	}
+
+	@Test
+	public void testOpenUnselectedAndNoPriseDoorWhenNoDoorChoosen() {
+		List<Door> doorsNoDoorSelected = gameHost.createDoors();
+		assertThatIllegalArgumentException().isThrownBy(() -> gameHost.openUnselectedDoor(doorsNoDoorSelected))
+											.describedAs("一つも選択されていない扉のリストを渡されたらIllegalArgumentExceptionを投げる")
+											.withMessage("扉が一つも選択されていません。");
+	}
+
+	@Test
+	public void testOpenUnselectedAndNoPriseDoorWhenNoPrise() {
+		List<Door> doorsNoPrise = Lists.newArrayList(new Door(1), new Door(2), new Door(3));
+		doorsNoPrise.get(0).setSelected(true);
+		assertThatIllegalArgumentException().isThrownBy(() -> gameHost.openUnselectedDoor(doorsNoPrise))
+											.describedAs("当たりがない扉のリストを渡されたらIllegalArgumentExceptionを投げる")
+											.withMessage("当たりの扉が一つもありません。");
+	}
+
+	private boolean isOnlyOneDoorOpened(List<Door> doors) {
+		return doors.stream().filter(door -> door.isOpened()).count() == 1L;
+	}
+
+	private boolean checkOpenedDoorIsNotPriseOrSelected(List<Door> doors) {
+		Optional<Door> illegallyOpenedDoor = doors.stream().filter(door -> door.isOpened() && door.isPrise()).findFirst();
+		return !illegallyOpenedDoor.isPresent();
 	}
 
 	private boolean isContainOnlyOnePrise(List<Door> doors) {
