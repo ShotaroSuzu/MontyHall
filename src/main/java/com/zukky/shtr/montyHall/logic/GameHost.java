@@ -6,4 +6,5 @@ import com.zukky.shtr.montyHall.entity.Door;
 
 public interface GameHost {
 	public List<Door> createDoors();
+	public List<Door> selectDoors(List<Door> doors,int doorId);
 }

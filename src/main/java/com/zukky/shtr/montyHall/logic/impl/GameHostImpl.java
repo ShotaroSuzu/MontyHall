@@ -19,4 +19,10 @@ public class GameHostImpl implements GameHost{
 		doors.get(new Random().nextInt(doors.size())).setPrise(true);
 		return doors;
 	}
+
+	@Override
+	public List<Door> selectDoors(List<Door> doors, int doorId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
