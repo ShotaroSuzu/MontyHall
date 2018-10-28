@@ -1,5 +1,7 @@
 package com.zukky.shtr.montyHall.logic.impl;
 
-public class GameImpl {
+import com.zukky.shtr.montyHall.logic.Game;
+
+public class GameImpl implements Game{
 
 }
