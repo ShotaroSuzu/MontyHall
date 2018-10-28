@@ -22,7 +22,10 @@ public class GameHostImpl implements GameHost{
 
 	@Override
 	public List<Door> selectDoors(List<Door> doors, int doorId) {
-		// TODO Auto-generated method stub
-		return null;
+		if(doorId > doors.size() + 1 || doorId <= 0) {
+			throw new IllegalArgumentException(doorId + "が指定されました。" +"1から" + (doors.size()) + "までの数字を選択してください。");
+		}
+		doors.get(doorId -1).setSelected(true);
+		return doors;
 	}
 }
