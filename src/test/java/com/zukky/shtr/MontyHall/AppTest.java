@@ -1,4 +1,4 @@
-package com.zukky.shtr.MontyHall;
+package com.zukky.shtr.montyHall;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

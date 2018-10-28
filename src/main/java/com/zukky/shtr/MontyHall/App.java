@@ -1,4 +1,4 @@
-package com.zukky.shtr.MontyHall;
+package com.zukky.shtr.montyHall;
 
 /**
  * Hello world!
