@@ -152,6 +152,22 @@ public class GameHostTest {
 				.isEqualTo(false);
 	}
 
+	@Test
+	public void testJudgePrise() {
+		List<Door> priseSelectedDoor = Lists.newArrayList(new Door(1, true), new Door(2), new Door(3));
+		priseSelectedDoor.get(0).setSelected(true);
+		
+		List<Door> priseNotSelectedDoor = Lists.newArrayList(new Door(1, true), new Door(2), new Door(3));
+		priseNotSelectedDoor.get(1).setSelected(true);
+		
+		assertThat(gameHost.judgePrise(priseSelectedDoor))
+				.describedAs("当たりの扉を選択している時に、当たりの判定がでることを確認する")
+				.isEqualTo(true);
+		assertThat(gameHost.judgePrise(priseNotSelectedDoor))
+				.describedAs("ハズレの扉を選択している時に、ハズレの判定が出ることを確認する")
+				.isEqualTo(false);
+	}
+
 	private boolean isOnlyOneDoorOpened(List<Door> doors) {
 		return doors.stream().filter(door -> door.isOpened()).count() == 1L;
 	}
