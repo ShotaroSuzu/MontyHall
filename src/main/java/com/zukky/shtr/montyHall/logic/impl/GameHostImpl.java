@@ -75,7 +75,11 @@ public class GameHostImpl implements GameHost{
 
 	@Override
 	public boolean judgePrise(List<Door> doors) {
-		// TODO Auto-generated method stub
-		return false;
+		checkIllegalDoors(doors);
+		Door selectedDoor = doors.stream()
+								.filter(door -> door.isSelected())
+								.findFirst()
+								.get();
+		return selectedDoor.isPrise();
 	}
 }
