@@ -41,4 +41,8 @@ public class Door {
 	public void setPrise(boolean prise) {
 		this.prise = prise;
 	}
+	@Override
+	public String toString() {
+		return "Door [id=" + id + ", opened=" + opened + ", selected=" + selected + ", prise=" + prise + "]";
+	}
 }

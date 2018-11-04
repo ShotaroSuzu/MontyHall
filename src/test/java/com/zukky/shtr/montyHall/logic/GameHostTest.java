@@ -91,7 +91,7 @@ public class GameHostTest {
 		assertThat(isOnlyOneDoorOpened(selectedIsPriseDoor)).describedAs("扉が一つだけ空いていることを確認する").isEqualTo(true);
 		assertThat(checkOpenedDoorIsNotPriseOrSelected(selectedIsPriseDoor)).describedAs("開けた扉が当たりではないことを確認する。選択した扉が当たりのケース").isEqualTo(true);
 		assertThat(isOnlyOneDoorOpened(selectedIsNotPriseDoor)).describedAs("扉が一つだけ空いていることを確認する").isEqualTo(true);
-		assertThat(checkOpenedDoorIsNotPriseOrSelected(selectedIsNotPriseDoor)).describedAs("開けた扉が当たりではないことを確認する。選択した扉が当たりではないケース").isEqualTo(true);
+		assertThat(checkOpenedDoorIsNotPriseOrSelected(selectedIsNotPriseDoor)).describedAs("開けた扉が当たりではないことを確認する。選択した扉が当たりではないケース" + selectedIsNotPriseDoor.toString()).isEqualTo(true);
 	}
 
 	private List<Door> createNoPriseDoors() {

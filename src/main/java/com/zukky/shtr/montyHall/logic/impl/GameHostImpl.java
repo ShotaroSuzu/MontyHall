@@ -42,7 +42,7 @@ public class GameHostImpl implements GameHost{
 			throw new IllegalArgumentException("当たりの扉が一つもありません。");
 		}
 		
-		List<Door> unselectedDoors = doors.stream().filter(door -> !door.isSelected() || !door.isPrise()).collect(Collectors.toList());
+		List<Door> unselectedDoors = doors.stream().filter(door -> !door.isSelected() && !door.isPrise()).collect(Collectors.toList());
 		Door openedDoor = unselectedDoors.get(new Random().nextInt(unselectedDoors.size()));
 		doors.stream().forEach(door -> {
 			if(door.getId() == openedDoor.getId()) {
