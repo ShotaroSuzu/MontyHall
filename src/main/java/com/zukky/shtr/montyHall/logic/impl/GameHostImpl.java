@@ -82,4 +82,10 @@ public class GameHostImpl implements GameHost{
 								.get();
 		return selectedDoor.isPrise();
 	}
+
+	@Override
+	public String getResultMessage(boolean result) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

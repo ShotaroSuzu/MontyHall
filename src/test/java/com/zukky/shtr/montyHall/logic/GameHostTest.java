@@ -168,6 +168,12 @@ public class GameHostTest {
 				.isEqualTo(false);
 	}
 
+	@Test
+	public void testGetResultMessage() {
+		assertThat(gameHost.getResultMessage(false)).describedAs("ハズレの時にハズレの文言が取得できることを確認する").isEqualTo("残念！ハズレです。");
+		assertThat(gameHost.getResultMessage(true)).describedAs("当たりの時に当たりの文言が取得できることを確認する").isEqualTo("おめでとうございます！当たりです！！");
+	}
+
 	private boolean isOnlyOneDoorOpened(List<Door> doors) {
 		return doors.stream().filter(door -> door.isOpened()).count() == 1L;
 	}
