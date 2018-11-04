@@ -85,7 +85,9 @@ public class GameHostImpl implements GameHost{
 
 	@Override
 	public String getResultMessage(boolean result) {
-		// TODO Auto-generated method stub
-		return null;
+		if(result) {
+			return "おめでとうございます！当たりです！！";
+		}
+		return "残念！ハズレです。";
 	}
 }
