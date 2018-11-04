@@ -8,6 +8,11 @@ public class Door {
 		super();
 		this.id = id;
 	}
+	public Door(int id, boolean prise) {
+		super();
+		this.id = id;
+		this.prise = prise;
+	}
 	private int id;
 	private boolean opened;
 	private boolean selected;

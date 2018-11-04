@@ -116,6 +116,42 @@ public class GameHostTest {
 											.withMessage("当たりの扉が一つもありません。");
 	}
 
+	@Test
+	public void testChangeSelectedDoorWhenChanged() {
+		List<Door> doors = Lists.newArrayList(new Door(1), new Door(2, true), new Door(3));
+		int selectedId = 0;
+		int notSelectedAndnotOpened = 1;
+		int openedeId = 2;
+		doors.get(selectedId).setSelected(true);
+		doors.get(openedeId).setOpened(true);
+		List<Door> changedDoors = gameHost.changeSelectedDoor(doors, true);
+		
+		assertThat(changedDoors.get(selectedId).isSelected())
+				.describedAs("変更する場合はもともと選択していた扉は閉じている")
+				.isEqualTo(false);
+		assertThat(changedDoors.get(notSelectedAndnotOpened).isSelected())
+				.describedAs("変更する場合は選択されず、開かれなかった扉が開いた状態になる")
+				.isEqualTo(true);
+	}
+
+	@Test
+	public void testChangeSelectedDoorWhenNotChanged() {
+		List<Door> doors = Lists.newArrayList(new Door(1), new Door(2, true), new Door(3));
+		int selectedId = 0;
+		int notSelectedAndnotOpened = 1;
+		int openedeId = 2;
+		doors.get(selectedId).setSelected(true);
+		doors.get(openedeId).setOpened(true);
+		List<Door> notChangedDoors = gameHost.changeSelectedDoor(doors, false);
+		
+		assertThat(notChangedDoors.get(selectedId).isSelected())
+				.describedAs("変更する場合はもともと選択していた扉は開いたまま")
+				.isEqualTo(true);
+		assertThat(notChangedDoors.get(notSelectedAndnotOpened).isSelected())
+				.describedAs("変更する場合は選択されず、開かれなかった扉は閉じたまま")
+				.isEqualTo(false);
+	}
+
 	private boolean isOnlyOneDoorOpened(List<Door> doors) {
 		return doors.stream().filter(door -> door.isOpened()).count() == 1L;
 	}

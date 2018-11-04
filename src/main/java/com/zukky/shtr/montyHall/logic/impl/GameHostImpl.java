@@ -51,4 +51,10 @@ public class GameHostImpl implements GameHost{
 		});
 		return doors;
 	}
+
+	@Override
+	public List<Door> changeSelectedDoor(List<Door> doors, boolean isChange) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
