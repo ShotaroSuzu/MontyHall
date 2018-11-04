@@ -9,4 +9,5 @@ public interface GameHost {
 	public List<Door> selectDoors(List<Door> doors,int doorId);
 	public List<Door> openUnselectedDoor(List<Door> doors);
 	public List<Door> changeSelectedDoor(List<Door> doors, boolean isChange);
+	public boolean judgePrise(List<Door> doors);
 }

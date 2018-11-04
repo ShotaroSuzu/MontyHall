@@ -32,16 +32,7 @@ public class GameHostImpl implements GameHost{
 
 	@Override
 	public List<Door> openUnselectedDoor(List<Door> doors) {
-		long countsOfSelected = doors.stream().filter(door -> door.isSelected()).count();
-		if(countsOfSelected > 1L) {
-			throw new IllegalArgumentException("選択されている扉が一つ以上あります。");
-		} else if(countsOfSelected == 0) {
-			throw new IllegalArgumentException("扉が一つも選択されていません。");
-		}
-		if(!doors.stream().filter(door -> door.isPrise()).findFirst().isPresent()) {
-			throw new IllegalArgumentException("当たりの扉が一つもありません。");
-		}
-		
+		checkIllegalDoors(doors);
 		List<Door> unselectedDoors = doors.stream().filter(door -> !door.isSelected() && !door.isPrise()).collect(Collectors.toList());
 		Door openedDoor = unselectedDoors.get(new Random().nextInt(unselectedDoors.size()));
 		doors.stream().forEach(door -> {
@@ -52,9 +43,39 @@ public class GameHostImpl implements GameHost{
 		return doors;
 	}
 
+	private void checkIllegalDoors(List<Door> doors) {
+		long countsOfSelected = doors.stream().filter(door -> door.isSelected()).count();
+		if(countsOfSelected > 1L) {
+			throw new IllegalArgumentException("選択されている扉が一つ以上あります。");
+		} else if(countsOfSelected == 0) {
+			throw new IllegalArgumentException("扉が一つも選択されていません。");
+		}
+		if(!doors.stream().filter(door -> door.isPrise()).findFirst().isPresent()) {
+			throw new IllegalArgumentException("当たりの扉が一つもありません。");
+		}
+	}
+
 	@Override
 	public List<Door> changeSelectedDoor(List<Door> doors, boolean isChange) {
+		checkIllegalDoors(doors);
+		if(!isChange) return doors;
+		doors
+		.stream()
+		.forEach(door -> {
+			if(door.isSelected()) {
+				door.setSelected(false);
+				return;
+			}
+			if(!door.isOpened()) {
+				door.setSelected(true);
+			}
+		});
+		return doors;
+	}
+
+	@Override
+	public boolean judgePrise(List<Door> doors) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 }
